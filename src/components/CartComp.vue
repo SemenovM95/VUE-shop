@@ -8,7 +8,6 @@
       </router-link>
     </div>
     <div class="cart-content">
-     <!-- <hr class="line"> -->
       <CartItem
         v-for="item of cartItems"
         :item="item"
@@ -22,6 +21,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import cartCompMixin from 'mixins/cartCompMixin';
 import CartItem from 'components/CartItem.vue';
 
@@ -29,6 +29,15 @@ export default {
   name: 'CartComp',
   components: { CartItem },
   mixins: [cartCompMixin],
+  methods: {
+    ...mapActions(['syncWithLS']),
+  },
+  mounted() {
+    this.getUserCart();
+  },
+  updated() {
+    this.syncWithLS();
+  },
 };
 </script>
 

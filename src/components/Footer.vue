@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     <section class="submit">
-      <img src="@/assets/img/submit-bg-img.jpg" alt="backround" class="submit-bg">
+      <img src="@/assets/img/submit-bg-img.jpg" alt="background" class="submit-bg">
       <div class="submit-content center">
         <div class="submit-left">
           <img src="@/assets/img/submit-photo.png" alt="photo">

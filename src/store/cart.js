@@ -1,14 +1,12 @@
+import { getFromLS, getUserCartFromDB, saveToLS } from 'mixins/lib';
+
 export default {
   state: {
     cartItems: [],
-    isCartVisible: false,
   },
   getters: {
     cartItems(state) {
       return state.cartItems;
-    },
-    isCartVisible(state) {
-      return state.isCartVisible;
     },
     getItemsAmount(state) {
       const items = state.cartItems;
@@ -43,42 +41,23 @@ export default {
     DELETE_PRODUCT(state, product) {
       state.cartItems.splice(state.cartItems.indexOf(product), 1);
     },
-    SWITCH_CART_VISIBILITY(state) {
-      state.isCartVisible = !state.isCartVisible;
-    },
   },
   actions: {
-    getUserCart({ commit }) {
-      const result = [
-        {
-          quantity: 4,
-          id: 2,
-          title: 'BLACK WOMEN BLAZER',
-          desc: 'Known for her sculptural takes on traditional tailoring,\n Australian arbiter of cool Kym Ellery teams up with Moda Operandi.',
-          price: '52.00',
-          color: 'Black',
-          size: 'M',
-        },
-        {
-          quantity: 2,
-          id: 1,
-          title: 'BLUE CASUAL MEN JACKET',
-          desc: 'Known for her sculptural takes on traditional tailoring,\n Australian arbiter of cool Kym Ellery teams up with Moda Operandi.',
-          price: '52.00',
-          color: 'Blue',
-          size: 'XL',
-        },
-        {
-          quantity: 1,
-          id: 3,
-          title: 'BLACK & BLUE MEN HOODIE',
-          desc: 'Known for her sculptural takes on traditional tailoring,\n Australian arbiter of cool Kym Ellery teams up with Moda Operandi.',
-          price: '52.00',
-          color: 'Black/Blue',
-          size: 'M',
-        },
-      ];
-      commit('SET_CART_STATE', result);
+    async getUserCart({ commit }) {
+      // TODO: подумать, можно ли переделать этот экшн во что-то более симпатичное
+      const result = await getFromLS('userCart');
+      if (result instanceof Error) {
+        await getUserCartFromDB()
+          .then((res) => {
+            commit('SET_CART_STATE', res);
+            console.warn('get from fetch');
+            this.dispatch(this.syncWithLS);
+          })
+          .catch((err) => console.error(err));
+      } else {
+        console.log('get with persist');
+        commit('SET_CART_STATE', result);
+      }
     },
     addProduct({ commit, state }, product) {
       const find = state.cartItems.find((el) => el.id === product.id);
@@ -108,11 +87,12 @@ export default {
     deleteProduct({ commit }, product) {
       commit('DELETE_PRODUCT', product);
     },
-    cartSwitch({ commit }) {
-      commit('SWITCH_CART_VISIBILITY');
-    },
     clearCart({ commit }) {
       commit('SET_CART_STATE', []);
+    },
+    // TODO: Вынести куда-нибудь, в сторе оно лишнее.
+    syncWithLS({ state }) {
+      saveToLS('userCart', state.cartItems);
     },
   },
 };
