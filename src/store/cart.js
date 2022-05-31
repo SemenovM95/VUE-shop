@@ -1,4 +1,4 @@
-import { getFromLS, getUserCartFromDB, saveToLS } from 'mixins/lib';
+import { getFromLS, getUserCartFromDB, saveToLS } from 'mixins/db';
 
 export default {
   state: {
@@ -44,18 +44,17 @@ export default {
   },
   actions: {
     async getUserCart({ commit }) {
-      // TODO: подумать, можно ли переделать этот экшн во что-то более симпатичное
       const result = await getFromLS('userCart');
       if (result instanceof Error) {
         await getUserCartFromDB()
           .then((res) => {
             commit('SET_CART_STATE', res);
             console.warn('get from fetch');
-            this.dispatch(this.syncWithLS);
+            this.dispatch('syncWithLS');
           })
           .catch((err) => console.error(err));
       } else {
-        console.log('get with persist');
+        console.warn('get from localStorage');
         commit('SET_CART_STATE', result);
       }
     },
@@ -90,7 +89,8 @@ export default {
     clearCart({ commit }) {
       commit('SET_CART_STATE', []);
     },
-    // TODO: Вынести куда-нибудь, в сторе оно лишнее.
+    // Находится здесь, т.к. используется и внутри стора и в копонентах
+    // позже можно будет вынести отсюда
     syncWithLS({ state }) {
       saveToLS('userCart', state.cartItems);
     },

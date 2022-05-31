@@ -1,47 +1,52 @@
 <template>
-  <div id="app">
-    <Header></Header>
-    <router-view/>
-    <Footer></Footer>
+<!--  TODO: сделать типы для всех пропсов и дата -->
+  <div id="app" :class="{overflow: isOverlayVisible}">
+    <div class="side-menu__overlay" v-show="isOverlayVisible"></div>
+      <Header></Header>
+      <div class="content-wrapper">
+        <router-view/>
+        <Submit/>
+      </div>
+      <Footer></Footer>
+    <MobileNavbar class="showMobileL"/>
   </div>
 </template>
 
 <script>
 import Header from 'components/Header.vue';
 import Footer from 'components/Footer.vue';
+import MobileNavbar from 'components/MobileNavbar.vue';
+import Submit from 'components/SubmitComp.vue';
 
 export default {
-  components: { Header, Footer },
+  components: {
+    Submit,
+    Header,
+    Footer,
+    MobileNavbar,
+  },
+  data() {
+    return {
+      isOverlayVisible: false,
+    };
+  },
 };
 
 </script>
 
 <style lang="sass">
-@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;600;700;900&display=swap")
-@import 'assets/styles/_vars.sass'
-*
-  margin: 0
-  padding: 0
-  box-sizing: border-box
-  outline: none
-a
-  text-decoration: none
-  &:visited
-    color: $accentColor
-body
-  font-family: 'Lato', sans-serif
-summary::-webkit-details-marker
-  display: none
-button,
-button:hover,
-button:active,
-button:focus
-  outline: none
-.center
-  padding-left: calc(50% - 570px)
-  padding-right: calc(50% - 570px)
-#content
-  flex: 1 0 auto
+.side-menu__overlay
+  background: black
+  opacity: .3
+  position: absolute
+  width: 100%
+  height: 100%
+  z-index: 20
+.content-wrapper
+  min-height: calc(100vh - 79px - 75px)
+  display: flex
+  flex-direction: column
+  justify-content: space-between
 #app
   font-family: Lato, sans-serif
   -webkit-font-smoothing: antialiased
@@ -51,5 +56,4 @@ button:focus
   display: flex
   flex-direction: column
   min-height: 100vh
-
 </style>

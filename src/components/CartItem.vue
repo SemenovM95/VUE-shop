@@ -1,27 +1,28 @@
 <template>
   <div class="cart-item">
-    <div class="product-bio">
+    <div class="cart-item__bio">
       <img
-        :src="require(`@/assets/img/product-img-${item.id}.png`)"
-        alt="Some image"
-        class="product-img"
+        :src="require(`@/assets/img/product/product-img-${item.id}.png`)"
+        :alt="item.title"
+        class="cart-item__img"
       >
-      <div class="product-desc">
-        <p class="product-title">{{item.title}}</p>
-        <div class="product-quantity">
-          <button class="btn decrease" @click="$emit('decrease', item)">
+      <div class="cart-item__desc">
+        <router-link :to="{ path: `/catalog/product/${item.id}` }">
+          <p class="cart-item__title">{{item.title}}</p>
+        </router-link>
+        <div class="cart-item__quantity">
+          <button class="btn decrease" @click="$emit('decrease', item)" title="Add item">
             <i class="fas fa-minus"></i>
           </button>
-          <p class="product-quantity_number">{{item.quantity}}</p>
-          <button class="btn increase" @click="$emit('increase', item)">
+          <p class="cart-item__number">{{item.quantity}}</p>
+          <button class="btn increase" @click="$emit('increase', item)" title="Remove item">
             <i class="fas fa-plus"></i>
           </button>
         </div>
-        <p class="product-price">${{item.price}} each</p>
+        <p class="cart-item__price">${{item.price}} each</p>
       </div>
     </div>
-    <div class="right-block">
-<!--      <p class="product-price">${{item.quantity*item.price}} total</p>-->
+    <div class="cart-item__delete">
       <button class="btn delete" @click="$emit('remove', item)">
         <i class="fas fa-trash del-btn_ico"></i>
       </button>
@@ -42,10 +43,23 @@ export default {
     justify-content: space-between
     &:not(:last-child)
       margin-bottom: 10px
-  .quantity
-    display: flex
-    align-items: center
-    justify-content: center
+    &__img
+      height: 100px
+    &__bio
+      display: flex
+      width: 300px
+    &__desc
+      display: flex
+      flex-direction: column
+      justify-content: space-evenly
+      margin: 0 20px
+    &__quantity
+      display: flex
+      justify-content: center
+      align-items: baseline
+    &__number
+      margin: 0 5px
+      user-select: none
   .btn
     background: none
     margin-top: 5px
@@ -56,22 +70,5 @@ export default {
     color: #acacac
     &:hover
       color: $accentColor
-  .product
-    &-img
-      height: 100px
-    &-bio
-      display: flex
-      width: 300px
-    &-desc
-      display: flex
-      flex-direction: column
-      justify-content: space-evenly
-      margin: 0 20px
-    &-quantity
-      display: flex
-      justify-content: center
-      align-items: baseline
-      &_number
-        margin: 0 5px
-        user-select: none
+
 </style>

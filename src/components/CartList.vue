@@ -1,5 +1,5 @@
 <template>
-  <div class="cart-comp">
+  <div class="cart-container">
     <p v-if="!cartItems.length">Nothing there yet</p>
     <div class="cart-content">
       <CartListItem
@@ -12,8 +12,8 @@
       />
     </div>
     <div class="cart-buttons">
-      <a href="#" class="cart-btn-left" @click="clearCart">CLEAR SHOPPING CART</a>
-      <a href="#" class="cart-btn_left">CONTINUE SHOPPING</a>
+      <button class="btn btn-color cart-btn" @click="clearCart">CLEAR SHOPPING CART</button>
+      <button class="btn btn-color cart-btn">CONTINUE SHOPPING</button>
     </div>
   </div>
 
@@ -32,19 +32,50 @@ export default {
 
 <style scoped lang="sass">
 .cart
+  &-container
+    margin-bottom: 30px
   &-buttons
     display: flex
     justify-content: space-between
-    margin-top: 72px
-    &_button
-      border: 1px solid #A4A4A4
-      padding: 16px 38px
+    padding-top: 72px
+  &-btn
+    border: 1px solid #A4A4A4
+    padding: 1em 2em
+    height: 100%
+    color: #757575
+    background: none
+    &:hover
+      border: 1px solid #fff
+      background: $accentColor
+      color: #fff
       &:hover
-        border: 1px solid #fff
-        background: $accentColor
-        color: #fff
-      &:visited
-        color: #000000
-        &:hover
-          color: #ffffff
+        color: #ffffff
+  &-content
+    display: flex
+    flex-direction: column
+@media (max-width: $maxWidthLaptop)
+  .cart
+    &-container
+      width: calc((60% - 32px *2))
+@media (max-width: $maxWidthTablet)
+  .cart
+    &-container
+      width: 100%
+    &-content
+      align-items: center
+    &-buttons
+      justify-content: space-around
+
+@media (max-width: $maxWidthMobileL)
+  .cart
+    &-buttons
+      justify-content: space-between
+      padding-top: 36px
+    &-btn
+      padding: 1em 1.5em
+      font-size: 12px
+@media (max-width: $maxWidthMobileS)
+  .cart
+    &-btn
+      padding: 4px 6px
 </style>

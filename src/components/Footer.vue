@@ -1,38 +1,19 @@
 <template>
   <footer class="footer">
-    <section class="submit">
-      <img src="@/assets/img/submit-bg-img.jpg" alt="background" class="submit-bg">
-      <div class="submit-content center">
-        <div class="submit-left">
-          <img src="@/assets/img/submit-photo.png" alt="photo">
-          <p class="submit-text">“Vestibulum quis porttitor dui! Quisque viverra nunc mi,
-            <span class="italic">a pulvinar purus condimentum</span> “
-          </p>
-        </div>
-        <div class="submit-right">
-          <h2 class="submit-heading">SUBSCRIBE</h2>
-          <p class="submit-heading_text">FOR OUR NEWSLETTER AND PROMOTION</p>
-          <form class="submit-form" action="#">
-              <input class="submit-input" type="email" placeholder="Enter Your Email">
-            <button class="submit-btn">Subscribe</button>
-          </form>
-        </div>
-      </div>
-    </section>
     <div class="footer-bottom center">
-      <p class="copyright">© 2021 Brand All Rights Reserved.</p>
+      <p class="copyright">© 2022 Brand All Rights Reserved.</p>
       <div class="social">
-        <a href="https://facebook.com" class="social-link">
-          <i class="fab fa-facebook-square social-ico"></i>
+        <a href="https://facebook.com" class="social-link" target="_blank">
+          <font-awesome-icon icon="fa-brands fa-facebook-square" class="icon social-ico"/>
         </a>
-        <a href="https://instagram.com" class="social-link">
-          <i class="fab fa-instagram-square social-ico"></i>
+        <a href="https://instagram.com" class="social-link" target="_blank">
+          <font-awesome-icon icon="fa-brands fa-instagram-square" class="icon social-ico"/>
         </a>
-        <a href="https://pinterest.com" class="social-link">
-          <i class="fab fa-pinterest-square social-ico"></i>
+        <a href="https://pinterest.com" class="social-link" target="_blank">
+          <font-awesome-icon icon="fa-brands fa-pinterest-square" class="icon social-ico"/>
         </a>
-        <a href="https://twitter.com" class="social-link">
-          <i class="fab fa-twitter-square social-ico"></i>
+        <a href="https://twitter.com" class="social-link" target="_blank">
+          <font-awesome-icon icon="fa-brands fa-twitter-square" class="icon social-ico"/>
         </a>
       </div>
     </div>
@@ -48,7 +29,7 @@ export default {
 <style scoped lang="sass">
 .footer
   background: #222224
-  margin-top: 50px
+  //margin-top: 50px
   flex: 0 0 auto
   &-bottom
     display: flex
@@ -59,6 +40,7 @@ export default {
   flex-direction: column
   align-items: center
   position: relative
+  // background-image: url(/assets/img/submit-bg-img.jpg)
   &-bg
     width: 100%
     max-height: 360px
@@ -66,7 +48,7 @@ export default {
     object-position: bottom
   &-content
     display: flex
-    justify-content: space-between
+    justify-content: space-around
     position: absolute
     width: 100%
     align-items: center
@@ -80,7 +62,7 @@ export default {
     display: flex
     flex-direction: column
     align-items: center
-    margin-right: 125px
+    // margin-right: 125px
   &-text
     padding-top: 36px
     text-align: center
@@ -97,7 +79,7 @@ export default {
     padding: 17px
     border-radius: 50px 0 0 50px
     border: none
-    width: 256px
+    width: 60%
   &-btn
     margin-left: -4px
     color: #ffffff
@@ -107,7 +89,7 @@ export default {
     background: $accentColor
     width: 100px
     cursor: pointer
-    transition: all ease-in-out .2s
+    //transition: all ease-in-out .2s
     &:hover
       background-color: $accentColorTinted
 .copyright
@@ -121,11 +103,16 @@ export default {
   display: flex
   justify-content: space-between
   &-ico
-    transition: all ease-in-out .2s
-.svg-inline--fa
-  color: white
-  height: 30px
-  width: 30px
-  &:hover
-    color: $accentColor
+    color: white
+    height: 30px
+    width: 30px
+  &-link
+    &:hover .icon path
+      fill: $accentColor
+
+@media (max-width: $maxWidthMobileL)
+  .footer
+    &-bottom
+      flex-direction: column
+      padding-bottom: calc(24px + 64px)
 </style>

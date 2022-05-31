@@ -1,13 +1,13 @@
 <template>
   <div class="cart-comp">
     <p v-if="!cartItems.length">Nothing there yet</p>
-    <div class="cart-top" v-if="cartItems.length">
-      <p class="cart-total">Total: ${{ getItemsAmount }} for {{ getItemsQuantity }} items </p>
+    <div class="cart__top" v-if="cartItems.length">
+      <p class="cart__total">Total: ${{ getItemsAmount }} for {{ getItemsQuantity }} items </p>
       <router-link to="/cart">
-        <button class="cart-link" >To cart</button>
+        <button class="cart__link" >To cart</button>
       </router-link>
     </div>
-    <div class="cart-content">
+    <div class="cart__content">
       <CartItem
         v-for="item of cartItems"
         :item="item"
@@ -46,16 +46,18 @@ a
   &:visited
     color: #000
 .cart
-  &-top
+  &__comp
+    cursor: default
+  &__top
     display: flex
     justify-content: space-between
     align-items: center
     margin-bottom: 5px
-  &-total
+  &__total
     font-size: 17px
     text-decoration: underline
     color: grey
-  &-link
+  &__link
     font-size: 16px
     font-weight: 600
     transition: all ease-in-out .2s

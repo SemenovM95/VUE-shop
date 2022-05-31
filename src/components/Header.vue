@@ -1,21 +1,40 @@
 <template>
   <header class="header center">
     <div class="header-left">
+      <button
+        class="btn hideMobileL"
+        @click="showMenu"
+        v-click-outside="hideMenu"
+      >
+        <font-awesome-icon icon="fa-solid fa-bars" class="icon">
+          <font-awesome-icon icon="fa-solid fa-magnifying-glass" size="xs" class="icon">
+          </font-awesome-icon>
+        </font-awesome-icon>
+        <SideMenu
+          class="side-menu"
+          :class="{'side-menu--active': isMenuVisible}"
+        />
+      </button>
       <router-link to="/"><img src="../assets/svg/home.svg" alt="home" /></router-link>
-      <SearchComp/>
+      <SearchComp class="hideMobileL"/>
     </div>
-    <div class="header-right">
+    <div class="header-right hideMobileL">
       <div id="nav">
         <router-link to="/">Home</router-link>
         <router-link to="/about">About</router-link>
         <router-link to="/catalog">Catalog</router-link>
       </div>
-      <button class="btn-cart" type="button" @click="isCartVisible = !isCartVisible">
-        <i class="fas fa-shopping-cart btn-cart"></i>
+      <button
+        class="btn-cart"
+        type="button"
+        @click="isCartVisible = !isCartVisible"
+        v-click-outside="hideCart"
+      >
+        <font-awesome-icon icon="fa-solid fa-cart-shopping" class="icon"/>
+        <span class="cart-block" v-show="isCartVisible"  @click.stop>
+          <CartComp/>
+        </span>
       </button>
-      <div class="cart-block" v-show="isCartVisible">
-        <CartComp/>
-      </div>
     </div>
   </header>
 </template>
@@ -23,15 +42,32 @@
 <script>
 import CartComp from 'components/CartComp.vue';
 import SearchComp from 'components/SearchComp.vue';
+import SideMenu from 'components/SideMenu.vue';
 
 export default {
   name: 'Header',
   data() {
     return {
       isCartVisible: false,
+      isMenuVisible: false,
     };
   },
-  components: { SearchComp, CartComp },
+  components: { SearchComp, CartComp, SideMenu },
+  methods: {
+    showMenu() {
+      this.isMenuVisible = true;
+      this.$parent.isOverlayVisible = true;
+      document.body.classList.add('overflow-hidden');
+    },
+    hideMenu() {
+      this.isMenuVisible = false;
+      this.$parent.isOverlayVisible = false;
+      document.body.classList.remove('overflow-hidden');
+    },
+    hideCart() {
+      this.isCartVisible = false;
+    },
+  },
   watch: {
     $route() {
       this.isCartVisible = false;
@@ -41,21 +77,6 @@ export default {
 </script>
 
 <style scoped lang="sass">
-.header
-  height: 75px
-  background-color: #222222
-  display: flex
-  justify-content: space-between
-  align-items: center
-  &-left
-    display: flex
-    justify-content: space-between
-    width: 320px
-  &-right
-    display: flex
-    align-items: center
-    justify-content: space-between
-    position: relative
 #nav
   padding: 30px
   a
@@ -64,7 +85,31 @@ export default {
     &:not(:last-child)
       padding-right: 10px
     &.router-link-exact-active
+      color: $accentColorTinted
+    &:hover
       color: $accentColor
+
+.side-menu
+  left: -250px
+  &--active
+    left: 0
+.header
+  z-index: 100
+  height: 75px
+  background-color: #222222
+  display: flex
+  justify-content: space-between
+  align-items: center
+  &-left
+    display: flex
+    justify-content: space-between
+    width: 360px
+  &-right
+    display: flex
+    align-items: center
+    justify-content: space-between
+    position: relative
+
 .cart
   display: flex
   position: relative
@@ -72,8 +117,8 @@ export default {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.62)
     border-radius: 5px
     box-sizing: border-box
-    right: 0
-    top: 100%
+    right: -20px
+    top: 85%
     position: absolute
     background-color: white
     padding: 20px
@@ -95,12 +140,22 @@ export default {
   border: 1px solid transparent
   transition: all ease-in-out .2s
   cursor: pointer
-  &:hover .fa-shopping-cart
-    color: $accentColor
-.fa-shopping-cart
+  &:hover .icon path
+    fill: $accentColor
+.icon
   height: 30px
   width: 30px
   color: #FFF
 .btn-cart, .logo
   align-self: center
+
+@media (max-width: $maxWidthMobileL)
+  .header-left
+    width: 100%
+    justify-content: center
+  .cart
+    &-block
+      width: 300px
+      right: -15px
+      top: 45px
 </style>

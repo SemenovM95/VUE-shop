@@ -1,18 +1,69 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600;700;900&display=swap")
-@import './_vars'
+@import '_vars'
+@import 'normalize'
 
 *
-  margin: 0
-  padding: 0
-  box-sizing: border-box
+  transition: all .1s ease-in-out
+  text-overflow: ellipsis
+
+::-webkit-scrollbar
+  width: 6px
+::-webkit-scrollbar-track
+  background-color: darkgrey
+::-webkit-scrollbar-thumb
+  background-color: #f16d7f
+  border-radius: 10px
 
 a
-  text-decoration: none
-  &:visited
-    color: $accentColor
+  cursor: pointer
+button
+  cursor: pointer
+.overflow-hidden
+  overflow: hidden
 
-body
-  font-family: 'Lato', sans-serif
+.center
+  padding-left: max(calc(50% - 570px), 24px)
+  padding-right: max(calc(50% - 570px), 24px)
 
-summary::-webkit-details-marker
-  display: none
+@media (max-width: $maxWidthLaptop)
+  .center
+    padding-left: 16px
+    padding-right: 16px
+
+@media (max-width: $maxWidthTablet)
+  .center
+    padding-left: 12px
+    padding-right: 12px
+
+@media (max-width: $maxWidthMobileL)
+  .center
+    padding-left: 8px
+    padding-right: 8px
+  .hideMobileL
+    display: none !important
+
+@media (max-width: $maxWidthMobileS)
+  .hideMobileS
+    display: none !important
+
+@media (min-width: $maxWidthMobileL)
+  .showMobileL
+    display: none !important
+
+.accent
+  color: $accentColor
+
+.btn
+  background: none
+  border: 1px solid transparent
+  //border-radius: 5px
+  transition: all ease-in-out .2s
+  cursor: pointer
+  color: #acacac
+
+.btn-color
+  &:hover
+    background: $accentColor
+.btn-tint
+  &:hover
+    background: $accentColorTinted

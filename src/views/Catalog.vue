@@ -2,25 +2,21 @@
   <div>
     <BreadCrumbs/>
     <section id="content" class="catalog center">
-      <CatalogList/>
+      <router-view/>
     </section>
   </div>
 </template>
 
 <script>
-import CatalogList from 'components/CatalogList.vue';
 import BreadCrumbs from 'components/BreadCrumbs.vue';
 
 export default {
   name: 'Catalog',
-  components: { BreadCrumbs, CatalogList },
+  components: { BreadCrumbs },
 };
 </script>
 
 <style scoped lang="sass">
-  .center
-    padding-left: calc(50% - 570px)
-    padding-right: calc(50% - 570px)
   .catalog
     display: flex
     flex-direction: column
@@ -29,4 +25,8 @@ export default {
     &-heading
       margin-top: 30px
       color: $accentColor
+
+  @media (max-width: $maxWidthMobileL)
+    .catalog
+      justify-content: center
 </style>
