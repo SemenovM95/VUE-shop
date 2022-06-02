@@ -22,6 +22,7 @@
       <div id="nav">
         <router-link to="/">Home</router-link>
         <router-link to="/catalog">Catalog</router-link>
+        <router-link to="/sandbox">Sandbox</router-link>
       </div>
       <button
         class="btn-cart"

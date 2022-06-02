@@ -14,11 +14,11 @@ const routes = [
     },
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import('views/About.vue'),
+    path: '/sandbox',
+    name: 'Sandbox',
+    component: () => import('views/Sandbox.vue'),
     meta: {
-      title: 'About',
+      title: 'Sandbox',
       breadcrumbs: [
         { name: 'Home' },
         { name: 'About' },
