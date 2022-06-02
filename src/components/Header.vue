@@ -1,6 +1,10 @@
 <template>
   <header class="header center">
     <div class="header-left">
+      <SideMenu
+        class="side-menu"
+        :class="{'side-menu--active': isMenuVisible}"
+      />
       <button
         class="btn hideMobileL"
         @click="showMenu"
@@ -10,10 +14,6 @@
           <font-awesome-icon icon="fa-solid fa-magnifying-glass" size="xs" class="icon">
           </font-awesome-icon>
         </font-awesome-icon>
-        <SideMenu
-          class="side-menu"
-          :class="{'side-menu--active': isMenuVisible}"
-        />
       </button>
       <router-link to="/"><img src="../assets/svg/home.svg" alt="home" /></router-link>
       <SearchComp class="hideMobileL"/>
@@ -21,7 +21,6 @@
     <div class="header-right hideMobileL">
       <div id="nav">
         <router-link to="/">Home</router-link>
-        <router-link to="/about">About</router-link>
         <router-link to="/catalog">Catalog</router-link>
       </div>
       <button

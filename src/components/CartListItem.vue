@@ -6,7 +6,9 @@
       class="item-img"
     >
     <div class="item-info">
-      <h4 class="item-heading">{{ item.title }}</h4>
+      <router-link :to="{ path: `/catalog/product/${item.id}` }">
+        <h4 class="item-heading">{{ item.title }}</h4>
+      </router-link>
       <div class="item-features">
         <span>Price:
           <span class="accent">${{ item.price }}</span>

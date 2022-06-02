@@ -12,7 +12,7 @@
         v-for="item of cartItems"
         :item="item"
         :key="item.id"
-        @remove="deleteProduct"
+        @remove="onDelete"
         @increase="increaseQuantity"
         @decrease="decreaseQuantity"
       />

@@ -1,4 +1,6 @@
 import { mapActions, mapGetters } from 'vuex';
+import dialog from 'components/Modals/dialog';
+import DeleteDialog from 'components/Modals/DeleteDialog.vue';
 
 const cartCompMixin = {
   computed: {
@@ -14,13 +16,14 @@ const cartCompMixin = {
       'deleteProduct',
       'increaseQuantity',
       'decreaseQuantity',
-      'cartSwitch',
       'clearCart',
+      'syncWithLS',
     ]),
+    onDelete(item) {
+      dialog(DeleteDialog)
+        .then((result) => (result === 'confirm' ? this.deleteProduct(item) : null));
+    },
   },
-  // mounted() {
-  //   this.getUserCart();
-  // },
 };
 
 export default cartCompMixin;

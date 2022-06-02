@@ -1,6 +1,6 @@
 <template>
 <!--  TODO: сделать типы для всех пропсов и дата -->
-  <div id="app" :class="{overflow: isOverlayVisible}">
+  <div id="app">
     <div class="side-menu__overlay" v-show="isOverlayVisible"></div>
       <Header></Header>
       <div class="content-wrapper">
@@ -38,7 +38,7 @@ export default {
 .side-menu__overlay
   background: black
   opacity: .3
-  position: absolute
+  position: fixed
   width: 100%
   height: 100%
   z-index: 20
