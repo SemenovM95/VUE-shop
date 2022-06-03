@@ -30,6 +30,7 @@
         @click="isCartVisible = !isCartVisible"
         v-click-outside="hideCart"
       >
+        <span class="cart-quantity">{{ cartQuantity }}</span>
         <font-awesome-icon icon="fa-solid fa-cart-shopping" class="icon"/>
         <span class="cart-block" v-show="isCartVisible"  @click.stop>
           <CartComp/>
@@ -50,6 +51,7 @@ export default {
     return {
       isCartVisible: false,
       isMenuVisible: false,
+      cartQuantity: 0,
     };
   },
   components: { SearchComp, CartComp, SideMenu },
@@ -71,6 +73,9 @@ export default {
   watch: {
     $route() {
       this.isCartVisible = false;
+    },
+    '$store.getters.getItemsQuantity': function (value) {
+      this.cartQuantity = value;
     },
   },
 };
@@ -135,6 +140,16 @@ export default {
       border-left: 10px solid transparent
       border-right: 10px solid transparent
       border-bottom: 10px solid white
+  &-quantity
+    position: absolute
+    background: #f16d7f
+    border-radius: 100%
+    width: 12px
+    height: 12px
+    font-size: 10px
+    font-weight: bold
+    color: white
+    right: -2px
 .btn-cart
   background-color: transparent
   border: 1px solid transparent

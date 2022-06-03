@@ -48,19 +48,19 @@ export default {
 .dialog-enter-active, .dialog-leave-active
   transition: all .2s
 .dialog-enter, .dialog-leave-to
-  transform: translateY(-250px)
+  transform: translateY(-150px)
   opacity: 0
 .backdrop-enter-active
-  animation: .3s fade forwards
+  animation: .3s fade-blur forwards
 .backdrop-leave-active
-  animation: .3s fade reverse
-.backdrop-enter, .backdrop-leave-to
-  opacity: 0
-@keyframes fade
+  animation: .3s fade-blur reverse
+@keyframes fade-blur
   from
-    opacity: 0
+    background: rgba(0,0,0,0)
+    backdrop-filter: blur(0)
   to
-    opacity: .5
+    background: rgba(0,0,0,.5)
+    backdrop-filter: blur(8px)
 .dialog
   &-wrapper
     z-index: 1000
@@ -80,8 +80,8 @@ export default {
     left: 0
     right: 0
     min-height: 100vh
-    background: black
-    opacity: .5
+    background: rgba(0,0,0,.5)
+    backdrop-filter: blur(8px)
   &-content
     z-index: 1001
     padding: 16px
@@ -89,4 +89,5 @@ export default {
     border-radius: 8px
     min-height: 160px
     min-width: 320px
+    box-shadow: 0 0 25px -15px black
 </style>
