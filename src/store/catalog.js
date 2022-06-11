@@ -1,4 +1,5 @@
-import { getGoodsListFromDB } from 'mixins/db';
+import { getGoodsListFromDB, search } from 'mixins/db';
+// import { getGoodsListFromAPI } from 'mixins/db';
 
 export default {
   state: {
@@ -7,6 +8,7 @@ export default {
     userSearch: '',
     currPage: 1,
     pageSize: 6,
+    searchFields: ['title', 'color', 'size'],
   },
   getters: {
     goods(state) {
@@ -25,6 +27,11 @@ export default {
     },
     isCatalogLoaded(state) {
       return state.isCatalogLoaded;
+    },
+    getSearchResults(state) {
+      if (!state.userSearch) return [];
+      const searchTags = state.userSearch.split(' ');
+      return search(state.goods, searchTags, state.searchFields);
     },
   },
   mutations: {

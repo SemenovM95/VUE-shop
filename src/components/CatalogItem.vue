@@ -3,7 +3,7 @@
   <div class="item">
     <router-link :to="{ name: 'Product', params: {id: item.id} }" class="link">
       <img
-        :src="require(`@/assets/img/product/${item.img}`)"
+        :src="require(`@/assets/img/product/${item.image}`)"
         alt="Product Image"
         class="item-img"
       />
@@ -13,7 +13,7 @@
     </router-link>
     <div class="item-bio">
       <h3>{{ item.title }}</h3>
-      <p class="description">{{ item.desc }}</p>
+      <p class="description">{{ item.description }}</p>
       <p class="price">${{ item.price }}</p>
     </div>
   </div>

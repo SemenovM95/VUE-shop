@@ -1,8 +1,17 @@
 <template>
   <form action="#" class="search-form" @submit.prevent="searchGoods">
-    <div class="search-block">
-      <input type="text" class="search-field" @input="updateSearch" placeholder="Search">
-      <button class="search-btn" type="submit">
+    <div class="search-block" v-click-outside="onFocusOut" @keydown.esc="onFocusOut">
+      <input
+        type="text"
+        class="search-field"
+        :class="{'search-field_dropdown': isHintsVisible && userSearch}"
+        v-model="userSearch"
+        @input="updateSearch"
+        @focus="onFocus"
+        placeholder="Search"
+      >
+      <SearchHints v-show="isHintsVisible && userSearch" :list="getSearchResults"/>
+      <button class="search-btn">
         <i class="fas fa-search"></i>
       </button>
     </div>
@@ -11,15 +20,41 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import SearchHints from 'components/SearchHints.vue';
+import { throttle } from 'lodash';
 
 export default {
   name: 'SearchComp',
-  computed: { ...mapGetters(['']) },
+  components: { SearchHints },
+  data() {
+    return {
+      userSearch: '',
+      isHintsVisible: false,
+    };
+  },
+  computed: { ...mapGetters(['getSearchResults']) },
   methods: {
     ...mapActions(['searchGoods']),
-    updateSearch(e) {
-      this.$store.commit('SET_SEARCH', e.target.value);
+    updateSearch() {
+      this.$store.commit('SET_SEARCH', this.userSearch);
+      this.isHintsVisible = true;
     },
+    onFocus() {
+      this.isHintsVisible = true;
+    },
+    onFocusOut(e) {
+      e.target.blur();
+      this.isHintsVisible = false;
+    },
+  },
+  watch: {
+    $route() {
+      this.isHintsVisible = false;
+    },
+  },
+  created() {
+    // TODO: найти нормальное решение для передачи контекста
+    this.updateSearch = throttle(this.updateSearch, 500);
   },
 };
 </script>
@@ -35,17 +70,22 @@ export default {
   &-block
     position: relative
   &-field
-    width: 240px
+    width: 760px
     height: 36px
     border-radius: 25px
     border: none
-    padding: 8px 15px
+    padding: 8px 30px
     font-size: 20px
+    &_dropdown
+      border-bottom-right-radius: 0
+      border-bottom-left-radius: 0
+    &:hover
+      filter: brightness(0.90)
   &-btn
     background: transparent
     cursor: pointer
     border: none
-    &:hover .fa-search
+    &:hover .fa-search > path
       color: $accentColor
 .fa-search
   color: #000

@@ -65,7 +65,7 @@
         Shop for items based on what we featured in this week
       </p>
       <div class="catalog-content">
-        <CatalogList />
+        <ProductList :list="getPage"/>
       </div>
       <router-link to="/catalog" class="featured-button">
         <p>Browse All Products</p>
@@ -75,17 +75,22 @@
 </template>
 
 <script>
-import CatalogList from 'components/CatalogList.vue';
+import { mapGetters, mapActions } from 'vuex';
+import ProductList from 'components/ProductList.vue';
 
 export default {
   name: 'Home',
-  components: { CatalogList },
+  components: { ProductList },
   data() {
     return {
       screenWidth: undefined,
     };
   },
+  computed: {
+    ...mapGetters(['getPage']),
+  },
   methods: {
+    ...mapActions(['getGoodsList']),
     onResize() {
       this.screenWidth = window.innerWidth;
     },
@@ -93,6 +98,9 @@ export default {
   created() {
     this.onResize();
     window.addEventListener('resize', this.onResize);
+  },
+  mounted() {
+    this.getGoodsList();
   },
   destroyed() {
     window.removeEventListener('resize', this.onResize);

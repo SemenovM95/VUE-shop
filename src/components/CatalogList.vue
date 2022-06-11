@@ -1,10 +1,8 @@
 <template>
   <div>
     <div v-if="isCatalogLoaded" class="catalog-wrapper">
-      <div class="catalog-list">
-        <CatalogItem v-for="item of getPage" :item="item" :key="item.id"/>
-      </div>
-      <Pagination v-if="isPaginationVisible"/>
+      <ProductList :list="getPage"/>
+      <Pagination :pages="getPagesAmount" :currPage="getCurrPage" @setPage="setCurrPage"/>
     </div>
     <div v-else>
       <pre>Loading <font-awesome-icon icon="fa-solid fa-spinner" size="xl" spin/></pre>
@@ -13,42 +11,35 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import CatalogItem from 'components/CatalogItem.vue';
+import { mapGetters, mapActions } from 'vuex';
 import Pagination from 'components/UI/Pagination.vue';
+import ProductList from 'components/ProductList.vue';
 
 export default {
   name: 'CatalogList',
-  components: { Pagination, CatalogItem },
+  components: { ProductList, Pagination },
   computed: {
-    ...mapGetters(['goods', 'getPage', 'getPagesAmount', 'isCatalogLoaded']),
-    isPaginationVisible() {
-      return this.$route.path === '/catalog';
-    },
+    ...mapGetters(['goods', 'getPage', 'isCatalogLoaded', 'getPagesAmount', 'getCurrPage']),
   },
   methods: {
-    ...mapActions(['getGoodsList']),
+    ...mapActions(['getGoodsList', 'setCurrPage']),
+    setPage(page) {
+      this.setCurrPage(page);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    },
   },
   mounted() {
     this.getGoodsList();
-  },
-  beforeDestroy() {
-    this.$store.commit('SET_CATALOG_LOAD_STATUS', false);
   },
 };
 </script>
 
 <style scoped lang="sass">
-.catalog
-  &-wrapper
+.catalog-wrapper
     display: flex
     flex-direction: column
     align-items: center
-  &-list
-    display: flex
-    flex-flow: row wrap
-    justify-content: space-between
-    width: 100%
+
 @media (max-width: $maxWidthLaptop)
   .catalog-list
     justify-content: space-between

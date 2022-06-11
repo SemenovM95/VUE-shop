@@ -1,37 +1,26 @@
 <template>
     <ul class="pages">
       <li>
-        <button class="btn" @click="setPage(getCurrPage - 1)">Prev</button>
+        <button class="btn" @click="$emit( 'setPage',currPage - 1)">Prev</button>
       </li>
-      <li v-for="page in getPagesAmount" :key="page" class="pagination-btn">
+      <li v-for="page in pages" :key="page" class="pagination-btn">
         <button
           class="btn"
-          :class="{'page--current': getCurrPage === page}"
-          @click="setPage(page)">
+          :class="{'page--current': currPage === page}"
+          @click="$emit( 'setPage', page)">
             {{ page }}
         </button>
       </li>
       <li>
-        <button class="btn" @click="setPage(getCurrPage + 1)">Next</button>
+        <button class="btn" @click="$emit( 'setPage',currPage + 1)">Next</button>
       </li>
     </ul>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-
 export default {
   name: 'pagination',
-  computed: {
-    ...mapGetters(['getPagesAmount', 'getCurrPage']),
-  },
-  methods: {
-    ...mapActions(['setCurrPage']),
-    setPage(page) {
-      this.setCurrPage(page);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    },
-  },
+  props: ['pages', 'currPage'],
 };
 </script>
 
