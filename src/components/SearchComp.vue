@@ -4,7 +4,10 @@
       <input
         type="text"
         class="search-field"
-        :class="{'search-field_dropdown': isHintsVisible && userSearch}"
+        :class="{
+        'search-field_dropdown': isHintsVisible && userSearch,
+        'search-field_expand': isHintsVisible
+        }"
         v-model="userSearch"
         @input="updateSearch"
         @focus="onFocus"
@@ -70,7 +73,7 @@ export default {
   &-block
     position: relative
   &-field
-    width: 760px
+    width: 240px
     height: 36px
     border-radius: 25px
     border: none
@@ -79,6 +82,8 @@ export default {
     &_dropdown
       border-bottom-right-radius: 0
       border-bottom-left-radius: 0
+    &_expand
+      width: 760px
     &:hover
       filter: brightness(0.90)
   &-btn
