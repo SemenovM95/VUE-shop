@@ -1,6 +1,11 @@
 <template>
   <form action="#" class="search-form" @submit.prevent="searchGoods">
-    <div class="search-block" v-click-outside="onFocusOut" @keydown.esc="onFocusOut">
+    <div
+      class="search-block"
+      v-click-outside="onFocusOut"
+      @keydown.esc="onFocusOut"
+      @keydown.enter="onSearchRequest"
+    >
       <input
         type="text"
         class="search-field"
@@ -14,7 +19,7 @@
         placeholder="Search"
       >
       <SearchHints v-show="isHintsVisible && userSearch" :list="getSearchResults"/>
-      <button class="search-btn">
+      <button class="search-btn" @click="onSearchRequest">
         <i class="fas fa-search"></i>
       </button>
     </div>
@@ -38,21 +43,32 @@ export default {
   computed: { ...mapGetters(['getSearchResults']) },
   methods: {
     ...mapActions(['searchGoods']),
+    onSearchRequest() {
+      this.searchGoods();
+      this.hideHints();
+      if (this.$route.path !== '/catalog') this.$router.push('/catalog');
+    },
     updateSearch() {
       this.$store.commit('SET_SEARCH', this.userSearch);
-      this.isHintsVisible = true;
+      this.showHints();
     },
     onFocus() {
-      this.isHintsVisible = true;
+      this.showHints();
     },
     onFocusOut(e) {
       e.target.blur();
+      this.hideHints();
+    },
+    showHints() {
+      this.isHintsVisible = true;
+    },
+    hideHints() {
       this.isHintsVisible = false;
     },
   },
   watch: {
     $route() {
-      this.isHintsVisible = false;
+      this.hideHints();
     },
   },
   created() {

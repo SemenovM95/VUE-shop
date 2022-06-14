@@ -1,4 +1,4 @@
-import { getGoodsListFromDB, search } from 'mixins/db';
+import { getGoodsListFromDB, searchGoods } from 'mixins/db';
 // import { getGoodsListFromAPI } from 'mixins/db';
 
 export default {
@@ -31,7 +31,7 @@ export default {
     getSearchResults(state) {
       if (!state.userSearch) return [];
       const searchTags = state.userSearch.split(' ');
-      return search(state.goods, searchTags, state.searchFields);
+      return searchGoods(state.goods, searchTags, state.searchFields);
     },
   },
   mutations: {
@@ -70,9 +70,8 @@ export default {
     //     .catch((err) => console.error(err));
     // },
     searchGoods({ commit, state }) {
-      const regexp = new RegExp(state.userSearch, 'i');
-      const filtered = state.goods.filter((el) => regexp.test(el.title));
-      commit('SET_GOODS_LIST', filtered);
+      const searchTags = state.userSearch.split(' ');
+      commit('SET_GOODS_LIST', searchGoods(state.goods, searchTags, state.searchFields));
     },
     setCurrPage({ commit }, pageNumber) {
       if (pageNumber < 1 || pageNumber > this.getters.getPagesAmount) return;

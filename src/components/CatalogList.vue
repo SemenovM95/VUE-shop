@@ -25,10 +25,11 @@ export default {
     ...mapActions(['getGoodsList', 'setCurrPage']),
     setPage(page) {
       this.setCurrPage(page);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0 });
     },
   },
   mounted() {
+    if (this.getPage.length) return;
     this.getGoodsList();
   },
 };
@@ -39,11 +40,16 @@ export default {
     display: flex
     flex-direction: column
     align-items: center
+    min-width: 1140px
 
 @media (max-width: $maxWidthLaptop)
   .catalog-list
     justify-content: space-between
+  .catalog-wrapper
+    min-width: unset
 @media (max-width: $maxWidthMobileL)
   .catalog-list
     justify-content: center
+  .catalog-wrapper
+    min-width: unset
 </style>

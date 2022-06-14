@@ -251,10 +251,10 @@ export async function getGoodsListFromAPI() {
     .catch((err) => console.error(err));
 }
 
-export function search(items, tags, fields) {
+export function searchGoods(items, tags, fields) {
   const result = items.filter((item) =>
     fields.some((field) => item[field].toLowerCase().includes(tags[0].toLowerCase())));
   if (tags.length === 1) return result;
   tags.shift();
-  return search(result, tags, fields);
+  return searchGoods(result, tags, fields);
 }

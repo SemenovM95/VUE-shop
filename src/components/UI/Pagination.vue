@@ -1,7 +1,14 @@
 <template>
     <ul class="pages">
       <li>
-        <button class="btn" @click="$emit( 'setPage',currPage - 1)">Prev</button>
+        <button
+          class="btn"
+          :disabled="currPage === 1"
+          :class="{'disabled': currPage === 1}"
+          @click="$emit( 'setPage',currPage - 1)"
+        >
+          Prev
+        </button>
       </li>
       <li v-for="page in pages" :key="page" class="pagination-btn">
         <button
@@ -12,7 +19,14 @@
         </button>
       </li>
       <li>
-        <button class="btn" @click="$emit( 'setPage',currPage + 1)">Next</button>
+        <button
+          class="btn"
+          :disabled="currPage === pages"
+          :class="{'disabled': currPage === pages}"
+          @click="$emit( 'setPage',currPage + 1)"
+        >
+          Next
+        </button>
       </li>
     </ul>
 </template>
@@ -25,6 +39,12 @@ export default {
 </script>
 
 <style scoped lang="sass">
+.disabled
+  cursor: default
+  background: #d6d6d6
+  &:hover
+    background: #d6d6d6
+    color: #acacac
 .pages
   display: flex
   list-style: none

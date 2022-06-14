@@ -42,8 +42,8 @@ h2
   justify-content: space-between
   align-items: center
   min-height: 148px
-  padding-left: 48px
-  padding-right: 48px
+  //padding-left: 48px
+  //padding-right: 48px
   &__link:last-child
     font-weight: bold
     color: $accentColor
