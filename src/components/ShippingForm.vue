@@ -1,5 +1,5 @@
 <template>
-  <form action="" id="shipping-form">
+  <form action="" id="shipping-form" @click.stop>
     <input type="text" placeholder="City" v-model="city">
     <input type="text" placeholder="State" v-model="state">
     <input type="number" placeholder="Postcode / Zip" v-model="zipCode">

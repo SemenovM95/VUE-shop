@@ -25,12 +25,14 @@ export default {
     ...mapActions(['getGoodsList', 'setCurrPage']),
     setPage(page) {
       this.setCurrPage(page);
-      window.scrollTo({ top: 0 });
     },
   },
   mounted() {
     if (this.getPage.length) return;
     this.getGoodsList();
+  },
+  watch: {
+    getPage: () => window.scrollTo({ top: 0, behavior: 'smooth' }),
   },
 };
 </script>
