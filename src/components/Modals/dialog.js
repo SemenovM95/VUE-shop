@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import DialogWrapper from 'components/UI/Dialog.vue';
+import DialogWrapper from 'components/UI/DialogWrapper.vue';
 
 export default function openDialog(component, props) {
   return new Promise((resolve) => {

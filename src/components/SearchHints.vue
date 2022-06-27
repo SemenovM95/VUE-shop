@@ -1,11 +1,14 @@
 <template>
   <div class="search-results">
     <template v-if="list && list.length">
-      <div v-for="item in showHints" :key="item.id" class="search-hint">
-        <router-link :to="{name: 'Product', params: {id: item.id}}">
+      <router-link
+        :to="{name: 'Product', params: {id: item.id}}"
+        v-for="item in showHints"
+        :key="item.id"
+        class="search-hint"
+      >
           {{ item.title }} {{ item.size }} {{ item.color }}
-        </router-link>
-      </div>
+      </router-link>
     </template>
     <template v-else>
       <p>No results</p>
@@ -33,6 +36,8 @@ export default {
 <style scoped lang="sass">
 .search
   &-results
+    display: flex
+    flex-direction: column
     position: absolute
     max-height: 460px
     width: 100%
@@ -49,4 +54,6 @@ export default {
     transition: background-color .2s
     &:hover
       background-color: #d9d9d9
+  &-hint a
+    width: 100%
 </style>
